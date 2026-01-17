@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>STT Hotkey - Voice to Text for Linux</title>
+    <style>
+        * { box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #1a1a2e;
+            color: #eee;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+        }
+        .container { max-width: 800px; margin: 0 auto; }
+        h1 { color: #e94560; border-bottom: 2px solid #e94560; padding-bottom: 10px; }
+        h2 { color: #e94560; margin-top: 40px; }
+        code { background: #0f0f1a; padding: 2px 6px; border-radius: 4px; font-family: monospace; }
+        pre { background: #0f0f1a; padding: 15px; border-radius: 8px; overflow-x: auto; border-left: 3px solid #e94560; }
+        pre code { padding: 0; background: none; }
+        .install-box { background: #16213e; padding: 30px; border-radius: 12px; margin: 30px 0; text-align: center; }
+        .key { display: inline-block; background: #333; border: 1px solid #555; border-radius: 4px; padding: 4px 10px; font-family: monospace; }
+        a { color: #e94560; }
+        .copy-btn { background: #e94560; color: white; border: none; padding: 10px 20px; border-radius: 4px; cursor: pointer; margin-top: 15px; }
+        .copy-btn:hover { background: #c73e54; }
+        .success { background: #0a3d0a; border-left: 3px solid #0f0; padding: 15px; border-radius: 0 8px 8px 0; margin: 20px 0; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>STT Hotkey</h1>
+        <p>Press a key to record your voice, press again to transcribe and paste. Uses OpenAI's Whisper for accurate offline speech recognition.</p>
+
+        <h2>Features</h2>
+        <ul>
+            <li>Press <span class="key">Menu</span> key to start/stop recording</li>
+            <li>Automatic transcription with Whisper AI (runs locally)</li>
+            <li>Pastes directly at cursor</li>
+            <li>Works in terminals and browsers</li>
+            <li>No cloud - everything runs on your machine</li>
+        </ul>
+
+        <h2>Installation</h2>
+        <div class="install-box">
+            <p>Run this command:</p>
+            <pre><code id="install-cmd">curl -fsSL https://raw.githubusercontent.com/pexlit/stt-hotkey/main/install.sh | bash</code></pre>
+            <button class="copy-btn" onclick="navigator.clipboard.writeText(document.getElementById('install-cmd').textContent).then(()=>{this.textContent='Copied!';setTimeout(()=>this.textContent='Copy',2000)})">Copy</button>
+        </div>
+
+        <div class="success">
+            <strong>That's it!</strong> Press <span class="key">Menu</span> to record, press again to transcribe and paste.
+        </div>
+
+        <h2>Configuration</h2>
+        <p>Edit <code>~/.local/bin/stt-toggle.sh</code>:</p>
+        <ul>
+            <li><strong>Model</strong>: Change <code>--model base</code> to <code>tiny</code> (faster) or <code>small</code>/<code>medium</code> (more accurate)</li>
+            <li><strong>Language</strong>: Change <code>--language en</code> to your language code (<code>nl</code>, <code>de</code>, etc.)</li>
+        </ul>
+
+        <h2>Troubleshooting</h2>
+        <p>Errors are shown as notifications. For details:</p>
+        <pre><code>cat /tmp/stt-hotkey.log</code></pre>
+
+        <h2>Uninstall</h2>
+        <pre><code>rm -f ~/.local/bin/stt-toggle.sh
+rm -rf ~/.local/share/stt-hotkey-venv
+gsettings reset org.gnome.settings-daemon.plugins.media-keys custom-keybindings</code></pre>
+
+        <hr style="margin-top: 50px; border-color: #333;">
+        <p style="color: #aaa; text-align: center;">
+            <a href="https://github.com/pexlit/stt-hotkey">GitHub</a> · Powered by <a href="https://github.com/openai/whisper">OpenAI Whisper</a>
+        </p>
+    </div>
+</body>
+</html>
